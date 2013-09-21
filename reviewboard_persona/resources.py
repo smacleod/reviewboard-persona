@@ -77,6 +77,12 @@ class PersonaLoginResource(WebAPIResource):
                                              "the provided email")
 
 
+        # Login as specified user without calling authenticate. this does
+        # not depend on auth backend (hopefully). This is based on
+        # Client.login() with a small hack that does not require the call
+        # to authenticate().
+        user.backend = "%s.%s" % ("django.contrib.auth.backends",
+                                  "ModelBackend")
         auth.login(request, user)
 
         if settings.USE_TZ:
