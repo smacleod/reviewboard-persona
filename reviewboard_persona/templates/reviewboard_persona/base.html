@@ -34,7 +34,7 @@
       // 2. Update your UI.
       $.ajax({ /* <-- This example uses jQuery, but you can use whatever you'd like */
         type: 'POST',
-        url: '/auth/login', // This is a URL on your website.
+        url: '/api/extensions/reviewboard_persona.extension.RBPersona/persona-logins/', // This is a URL on your website.
         data: {assertion: assertion},
         success: function(res, status, xhr) { window.location.reload(); },
         error: function(xhr, status, err) {

@@ -49,7 +49,7 @@ class PersonaLoginResource(WebAPIResource):
         try:
             response = self.verify_assertion(assertion)
 
-            if  hasattr(response, 'status')  and response.status != "okay":
+            if 'status' not in response or response['status'] != "okay":
                 # The assertion could not be verified
                 return 500, {}
 
