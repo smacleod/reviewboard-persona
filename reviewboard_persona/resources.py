@@ -2,6 +2,7 @@ from datetime import datetime
 import urllib2
 import urllib
 
+from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
