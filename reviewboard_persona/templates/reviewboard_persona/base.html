@@ -34,7 +34,7 @@
       // 2. Update your UI.
       $.ajax({ /* <-- This example uses jQuery, but you can use whatever you'd like */
         type: 'POST',
-        url: '/api/extensions/reviewboard_persona.extension.RBPersona/persona-logins/', // This is a URL on your website.
+        url: '/api/extensions/reviewboard_persona.extension.RBPersona/persona-login/', // This is a URL on your website.
         data: {assertion: assertion},
         success: function(res, status, xhr) {
           function getParameterByName(name) {
@@ -65,7 +65,7 @@
       // (That's a literal JavaScript null. Not false, 0, or undefined. null.)
       $.ajax({
         type: 'GET',
-        url: '/account/logout/', // This is a URL on your website.
+        url: '/api/extensions/reviewboard_persona.extension.RBPersona/persona-logout/', // This is a URL on your website.
         success: function(res, status, xhr) {
           window.location.reload();
         },

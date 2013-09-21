@@ -32,11 +32,10 @@ class PersonaLoginResource(WebAPIResource):
     """
     name = 'persona_login'
     allowed_methods = ('GET', 'POST',)
+    singleton = True
 
     VERIFICATION_URL = "https://verifier.login.persona.org/verify"
 
-    @webapi_check_local_site
-    @webapi_response_errors(INVALID_FORM_DATA)
     @webapi_request_fields(
         required={
             'assertion': {
@@ -64,7 +63,6 @@ class PersonaLoginResource(WebAPIResource):
         if 'status' not in response or response['status'] != "okay":
             # The assertion could not be verified
             return LOGIN_FAILED
-
 
         email = response['email']
 
@@ -115,3 +113,16 @@ class PersonaLoginResource(WebAPIResource):
         return simplejson.loads(rsp)
 
 persona_login_resource = PersonaLoginResource()
+
+
+class PersonaLogoutResource(WebAPIResource):
+    """Resource for logging out of Review Board."""
+    name = 'persona_logout'
+    allowed_methods = ('GET',)
+    singleton = True
+
+    def get(self, request, *args, **kwargs):
+        auth.logout(request)
+        return 200, {}
+
+persona_logout_resource = PersonaLogoutResource()

@@ -5,7 +5,8 @@ from django.conf.urls.defaults import patterns, include
 from reviewboard.extensions.base import Extension
 from reviewboard.extensions.hooks import TemplateHook
 
-from reviewboard_persona.resources import persona_login_resource
+from reviewboard_persona.resources import (persona_login_resource,
+                                           persona_logout_resource)
 
 class RBPersona(Extension):
 
@@ -16,6 +17,7 @@ class RBPersona(Extension):
 
     resources = [
         persona_login_resource,
+        persona_logout_resource,
     ]
 
     def __init__(self, *args, **kwargs):
