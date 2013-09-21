@@ -36,7 +36,21 @@
         type: 'POST',
         url: '/api/extensions/reviewboard_persona.extension.RBPersona/persona-logins/', // This is a URL on your website.
         data: {assertion: assertion},
-        success: function(res, status, xhr) { window.location.reload(); },
+        success: function(res, status, xhr) {
+          function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+            return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+          }
+
+          var nextPage = getParameterByName("next_page")
+          if (nextPage) {
+            window.location.href = nextPage;
+          } else {
+            window.location.reload();
+          }
+        },
         error: function(xhr, status, err) {
           navigator.id.logout();
           console.error("Login failure: " + err);
@@ -44,14 +58,17 @@
       });
     },
     onlogout: function() {
+
       // A user has logged out! Here you need to:
       // Tear down the user's session by redirecting the user or making a call to your backend.
       // Also, make sure loggedInUser will get set to null on the next page load.
       // (That's a literal JavaScript null. Not false, 0, or undefined. null.)
       $.ajax({
-        type: 'POST',
-        url: '/auth/logout', // This is a URL on your website.
-        success: function(res, status, xhr) { window.location.reload(); },
+        type: 'GET',
+        url: '/account/logout/', // This is a URL on your website.
+        success: function(res, status, xhr) {
+          window.location.reload();
+        },
         error: function(xhr, status, err) {
           console.error("Logout failure: " + err);
         }
