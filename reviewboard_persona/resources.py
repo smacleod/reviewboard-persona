@@ -89,6 +89,11 @@ class PersonaLoginResource(WebAPIResource):
         else:
             user.last_login = datetime.now()
 
+        # Keep track of the fact that we logged in using Persona for
+        # this session.
+        request.session['extension-reviewboard-persona'] = {
+            'persona-login': True,
+        }
         user.save()
 
         return 200, {}
@@ -123,6 +128,11 @@ class PersonaLogoutResource(WebAPIResource):
 
     def get(self, request, *args, **kwargs):
         auth.logout(request)
+
+        request.session['extension-reviewboard-persona'] = {
+            'persona-login': False,
+        }
+
         return 200, {}
 
 persona_logout_resource = PersonaLogoutResource()
